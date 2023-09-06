@@ -1,0 +1,5 @@
+
+
+function myIsInString(haystack, needle){
+
+}
