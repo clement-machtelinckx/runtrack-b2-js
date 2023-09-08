@@ -18,3 +18,5 @@ function myArraySort(array, sorting){
 
 myArraySort(array, "DESC")
 console.log(array)
+
+
