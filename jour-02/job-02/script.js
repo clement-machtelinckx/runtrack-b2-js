@@ -1,13 +1,13 @@
-const addCountBtn = document.getElementById('add-count-btn');
-const display = document.getElementById('count-displayer');
 
-let count = 0;
 
-display.innerHTML = count;
+function myAddCount () {
 
-addCountBtn.addEventListener('click', function() {
+    const counterDisplay = document.getElementById('count-displayer');
 
-    count++;
+    let currentValue = Number(counterDisplay.textContent);
+    currentValue++;
 
-    display.innerHTML = count;
-});
+    counterDisplay.textContent = currentValue;
+}
+
+document.getElementById('add-count-btn').addEventListener('click', myAddCount);
