@@ -7,11 +7,11 @@ export default class Board {
         this.hasWinner = hasWinner;
     }
 
-    grid = [["", "", ""], ["", "", ""], ["", "", ""]];
-    hasWinner = "";
+    grid = [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]];
+    
 
     initializeBoard(){
-        this.grid = [["", "", ""], ["", "", ""], ["", "", ""]]; 
+        this.grid = [["-", "-", "-"], ["-", "-", "-"], ["-", "-", "-"]]; 
         this.hasWinner = false
     }
 
@@ -37,19 +37,88 @@ export default class Board {
     }
 
     placeMove(row, col, symbol){
-        
+                // Vérifier si la case est déjà prise
+        if (this.grid[row][col] === "-") {
+            // La case est vide, placez le symbole du joueur
+            this.grid[row][col] = symbol;
+            return true;
+        } else {
+            // La case est déjà occupée, retournez false
+            return false;
+        }
 
     }
 
     checkVictory(){
 
-    }
+            // Définir toutes les combinaisons gagnantes possibles
+            const winningCombos = [
+                // Combinaisons horizontales
+                [[0, 0], [0, 1], [0, 2]],
+                [[1, 0], [1, 1], [1, 2]],
+                [[2, 0], [2, 1], [2, 2]],
+                // Combinaisons verticales
+                [[0, 0], [1, 0], [2, 0]],
+                [[0, 1], [1, 1], [2, 1]],
+                [[0, 2], [1, 2], [2, 2]],
+                // Combinaisons diagonales
+                [[0, 0], [1, 1], [2, 2]],
+                [[0, 2], [1, 1], [2, 0]]
+            ];
+        
+            // Parcourir les combinaisons gagnantes
+            for (const combo of winningCombos) {
+                const [a, b, c] = combo;
+                const [rowA, colA] = a;
+                const [rowB, colB] = b;
+                const [rowC, colC] = c;
+        
+                // Vérifier si les trois cases de la combinaison sont du même joueur
+                if (
+                    this.grid[rowA][colA] !== "-" &&
+                    this.grid[rowA][colA] === this.grid[rowB][colB] &&
+                    this.grid[rowA][colA] === this.grid[rowC][colC]
+                ) {
+                    // Une combinaison gagnante a été trouvée, définir hasWinner à true
+                    this.hasWinner = true;
+                    return true;
+                }
+            }
+        
+            // Aucune combinaison gagnante trouvée
+            return false;
+        }
+        
     
-    isFull(){
+    
+    isFull() {
+            // Parcourir toutes les cases du plateau
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 3; col++) {
+                    // Si une case est vide, le plateau n'est pas plein
+                    if (this.grid[row][col] === "-") {
+                        return false;
+                    }
+                }
+            }
+            // Si aucune case n'est vide, le plateau est plein
+            return true;
+        }
+        
 
-    }
-
-    resetBoard(){
-
-    }
+    resetBoard() {
+            // Remplir toutes les cases du plateau avec des chaînes vides
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 3; col++) {
+                    this.grid[row][col] = "-";
+                }
+            }
+        
+            // Réinitialiser hasWinner à false
+            this.hasWinner = false;
+        
+            // Afficher le plateau
+            this.displayBoard();
+        }
+        
 }
